@@ -74,5 +74,5 @@ else {
 $db_con = null;
 
 // Converte a resposta para o formato JSON.
-json_encode($resposta);
+echo json_encode($resposta);
 ?>

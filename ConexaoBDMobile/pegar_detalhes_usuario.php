@@ -11,13 +11,13 @@ $resposta = array();
 if(autenticar($db_con)) {
 
 	// Verifica se o parametro id foi enviado na requisicao
-	if (isset($_GET["id"])) {
+	if (isset($_GET["email"])) {
 		
 		// Aqui sao obtidos os parametros
-		$id = $_GET['id'];
+		$email = $_GET['email'];
 		
 		// Obtem do BD os detalhes do produto com id especificado na requisicao GET
-		$consulta = $db_con->prepare("SELECT * FROM usuario WHERE id = $id");
+		$consulta = $db_con->prepare("SELECT * FROM usuario WHERE email = $email");
 	
 		if ($consulta->execute()) {
 			if ($consulta->rowCount() > 0) {
@@ -30,6 +30,7 @@ if(autenticar($db_con)) {
 				$resposta["nome"] = $linha["nome"];
 				$resposta["foto"] = $linha["foto"];
         			$resposta["data_nascimento"] = $linha["data_nascimento"];
+				$resposta["id"] = $linha["id"];
 
 				// Caso o usuario exista no BD, o cliente 
 				// recebe a chave "sucesso" com valor 1.

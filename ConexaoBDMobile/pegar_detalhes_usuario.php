@@ -29,7 +29,7 @@ if(autenticar($db_con)) {
 				$linha = $consulta->fetch(PDO::FETCH_ASSOC);
 				$resposta["nome"] = $linha["nome"];
 				$resposta["foto"] = $linha["foto"];
-        $resposta["data_nascimento"] = $linha["data_nascimento"];
+        			$resposta["data_nascimento"] = $linha["data_nascimento"];
 
 				// Caso o usuario exista no BD, o cliente 
 				// recebe a chave "sucesso" com valor 1.

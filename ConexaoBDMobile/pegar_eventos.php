@@ -13,7 +13,7 @@ require_once('conexao_db.php');
 
 // array for JSON resposta
 $resposta = array();
-
+$resposta["eventos"] = array();
 
 // Primeiro, verifica-se se todos os parametros foram enviados pelo cliente.
 // limit - quantidade de produtos a ser entregues

@@ -14,7 +14,8 @@ require_once('conexao_db.php');
 // array for JSON resposta
 $resposta = array();
 $resposta["eventos"] = array();
-
+echo $resposta;
+echo $resposta["eventos"];
 // Primeiro, verifica-se se todos os parametros foram enviados pelo cliente.
 // limit - quantidade de produtos a ser entregues
 // offset - indica a partir de qual produto começa a lista
@@ -49,9 +50,13 @@ if (isset($_GET['limit']) && isset($_GET['offset'])) {
 				$evento["horario_fim"] = $linha["horario_fim"];
 				$evento["horario_inicio"] = $linha["horario_inicio"];
 
+				echo $evento;
 				// Adiciona o evento no array de eventos.
 				array_push($resposta["eventos"], $evento);
+				echo $resposta;
+				echo $resposta["eventos"];
 			}
+		$resposta["sucesso"] = 1;
 	}
 	else {
 		// Caso ocorra falha no BD, o cliente 

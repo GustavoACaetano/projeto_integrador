@@ -14,8 +14,6 @@ require_once('conexao_db.php');
 // array for JSON resposta
 $resposta = array();
 $resposta["eventos"] = array();
-var_dump($resposta);
-var_dump($resposta["eventos"]);
 // Primeiro, verifica-se se todos os parametros foram enviados pelo cliente.
 // limit - quantidade de produtos a ser entregues
 // offset - indica a partir de qual produto começa a lista
@@ -50,11 +48,8 @@ if (isset($_GET['limit']) && isset($_GET['offset'])) {
 				$evento["horario_fim"] = $linha["horario_fim"];
 				$evento["horario_inicio"] = $linha["horario_inicio"];
 
-				var_dump($evento);
 				// Adiciona o evento no array de eventos.
 				array_push($resposta["eventos"], $evento);
-				var_dump($resposta);
-				var_dump($resposta["eventos"]);
 			}
 		$resposta["sucesso"] = 1;
 	}
@@ -79,5 +74,5 @@ else {
 $db_con = null;
 
 // Converte a resposta para o formato JSON.
-return json_encode($resposta);
+json_encode($resposta);
 ?>

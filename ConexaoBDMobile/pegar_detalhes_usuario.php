@@ -7,63 +7,56 @@ require_once('autenticacao.php');
 // array de resposta
 $resposta = array();
 
-// verifica se o usuário conseguiu autenticar
-if(autenticar($db_con)) {
 
-	// Verifica se o parametro id foi enviado na requisicao
-	if (isset($_GET["email"])) {
-		
-		// Aqui sao obtidos os parametros
-		$email = $_GET['email'];
-		
-		// Obtem do BD os detalhes do produto com id especificado na requisicao GET
-		$consulta = $db_con->prepare("SELECT * FROM usuario WHERE email = $email");
+// Verifica se o parametro id foi enviado na requisicao
+if (isset($_GET["email"])) {
 	
-		if ($consulta->execute()) {
-			if ($consulta->rowCount() > 0) {
+	// Aqui sao obtidos os parametros
+	$email = $_GET['email'];
 	
-				// Se o produto existe, os dados completos do produto 
-				// sao adicionados no array de resposta. A imagem nao 
-				// e entregue agora pois ha um php exclusivo para obter 
-				// a imagem do produto.
-				$linha = $consulta->fetch(PDO::FETCH_ASSOC);
-				$resposta["nome"] = $linha["nome"];
-				$resposta["foto"] = $linha["foto"];
-        			$resposta["data_nascimento"] = $linha["data_nascimento"];
-				$resposta["id"] = $linha["id"];
+	// Obtem do BD os detalhes do produto com id especificado na requisicao GET
+	$consulta = $db_con->prepare("SELECT * FROM usuario WHERE email = $email");
 
-				// Caso o usuario exista no BD, o cliente 
-				// recebe a chave "sucesso" com valor 1.
-				$resposta["sucesso"] = 1;
-				
-			} else {
-				// Caso o produto nao exista no BD, o cliente 
-				// recebe a chave "sucesso" com valor 0. A chave "erro" indica o 
-				// motivo da falha.
-				$resposta["sucesso"] = 0;
-				$resposta["erro"] = "Usuario não encontrado";
-			}
+	if ($consulta->execute()) {
+		if ($consulta->rowCount() > 0) {
+
+			// Se o produto existe, os dados completos do produto 
+			// sao adicionados no array de resposta. A imagem nao 
+			// e entregue agora pois ha um php exclusivo para obter 
+			// a imagem do produto.
+			$linha = $consulta->fetch(PDO::FETCH_ASSOC);
+			$resposta["nome"] = $linha["nome"];
+			$resposta["foto"] = $linha["foto"];
+			$resposta["data_nascimento"] = $linha["data_nascimento"];
+			$resposta["id"] = $linha["id"];
+
+			// Caso o usuario exista no BD, o cliente 
+			// recebe a chave "sucesso" com valor 1.
+			$resposta["sucesso"] = 1;
+			
 		} else {
-			// Caso ocorra falha no BD, o cliente 
+			// Caso o produto nao exista no BD, o cliente 
 			// recebe a chave "sucesso" com valor 0. A chave "erro" indica o 
 			// motivo da falha.
 			$resposta["sucesso"] = 0;
-			$resposta["erro"] = "Erro no BD: " . $consulta->$error;
+			$resposta["erro"] = "Usuario não encontrado";
 		}
 	} else {
-		// Se a requisicao foi feita incorretamente, ou seja, os parametros 
-		// nao foram enviados corretamente para o servidor, o cliente 
+		// Caso ocorra falha no BD, o cliente 
 		// recebe a chave "sucesso" com valor 0. A chave "erro" indica o 
 		// motivo da falha.
 		$resposta["sucesso"] = 0;
-		$resposta["erro"] = "Campo requerido não preenchido";
+		$resposta["erro"] = "Erro no BD: " . $consulta->$error;
 	}
-}
-else {
-	// senha ou usuario nao confere
+} else {
+	// Se a requisicao foi feita incorretamente, ou seja, os parametros 
+	// nao foram enviados corretamente para o servidor, o cliente 
+	// recebe a chave "sucesso" com valor 0. A chave "erro" indica o 
+	// motivo da falha.
 	$resposta["sucesso"] = 0;
-	$resposta["error"] = "usuario ou senha não confere";
+	$resposta["erro"] = "Campo requerido não preenchido";
 }
+
 // Fecha a conexao com o BD
 $db_con = null;
 

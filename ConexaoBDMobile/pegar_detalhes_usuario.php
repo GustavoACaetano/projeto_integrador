@@ -29,6 +29,7 @@ if (isset($_GET["email"])) {
 			$resposta["foto"] = $linha["foto"];
 			$resposta["data_nascimento"] = $linha["data_nascimento"];
 			$resposta["id"] = $linha["id"];
+			$resposta["telefone"] = $linha["telefone"];
 
 			// Caso o usuario exista no BD, o cliente 
 			// recebe a chave "sucesso" com valor 1.

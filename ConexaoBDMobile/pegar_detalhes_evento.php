@@ -57,11 +57,12 @@ if(autenticar($db_con)) {
 
 				$resposta["intuito"] = $linha_intuito["nome"];
 
-				$consulta_usuario = $db_con->prepare("SELECT nome FROM usuario WHERE id = " . $usuario);
+				$consulta_usuario = $db_con->prepare("SELECT nome, email FROM usuario WHERE id = " . $usuario);
 				$consulta_usuario->execute();
 				$linha_usuario = $consulta_usuario->fetch(PDO::FETCH_ASSOC);
 
 				$resposta["usuario"] = $linha_usuario["nome"];
+				$resposta["email"] = $linha_usuario["email"];
 
 				$consulta_idade_publico = $db_con->prepare("SELECT intervalo FROM idade_publico WHERE id = " . $idade_publico);
 				$consulta_idade_publico->execute();

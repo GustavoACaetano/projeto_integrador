@@ -5,14 +5,16 @@ require_once('conexao_db.php');
 $resposta = array();
 
 // Verifica se o parametro id foi enviado na requisicao
-if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset($_GET["data"]) && isset($_GET["telefone"])) {
+if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset($_GET["data"]) && isset($_GET["telefone"]) && isset($_get["caminho_foto"])) {
 	
 	// Aqui sao obtidos os parametros
 	$id = $_GET['id'];
-  $nome = trim($_GET["nome"]);
-  $email = trim($_GET["email"]);
-  $data = trim($_GET["data"]);
-  $telefone = trim($_GET["telefone"]);
+	$nome = trim($_GET["nome"]);
+	$email = trim($_GET["email"]);
+	$data = trim($_GET["data"]);
+	$telefone = trim($_GET["telefone"]);
+	$caminho_foto = trim($_GET["caminho_foto"]);
+	// Ver a parada da foto com o gustavo e daniel
 	
 	// Obtem do BD os detalhes do produto com id especificado na requisicao GET
 	$consulta = $db_con->prepare("UPDATE usuario set nome = " . $nome . ", email = " . $email . ", data = " . $data . ", telefone = " . $telefone . " WHERE id = " . $id);

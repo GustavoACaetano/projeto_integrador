@@ -5,7 +5,7 @@ require_once('conexao_db.php');
 $resposta = array();
 
 // Verifica se o parametro id foi enviado na requisicao
-if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset($_GET["data"]) && isset($_GET["telefone"])) {
+if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset($_GET["data"]) && isset($_GET["telefone"]) && isset($_FILES['caminho_foto'])) {
 	
 	// Aqui sao obtidos os parametros
 	$id = $_GET['id'];
@@ -13,49 +13,27 @@ if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset
 	$email = trim($_GET["email"]);
 	$data = trim($_GET["data"]);
 	$telefone = trim($_GET["telefone"]);
-	//$caminho_foto = trim($_GET["caminho_foto"]);
-	if ($_FILES["caminho_foto"]["size"] > 0){
-	        $client_id = "6d2b5be8400b2b3";
-	        $filename = $_FILES['caminho_foto']['tmp_name'];
-	        
-	        $image_data = file_get_contents($filename);
-	        $image_data_base64 = base64_encode($image_data);
-	        
-	        $api_url = 'https://api.imgur.com/3/image.json';
-	        
-	        $headers = [
-	            'Authorization: Client-ID ' . $client_id,
-	            'Content-Type: application/x-www-form-urlencoded'
-	        ];
-	        
-	        $postData = http_build_query(['image' => $image_data_base64]);
-	        
-	        $options = [
-	            'http' => [
-	                'header' => implode("\r\n", $headers),
-	                'method' => 'POST',
-	                'content' => $postData
-	            ]
-	        ];
-	        
-	        $context = stream_context_create($options);
-	        $result = file_get_contents($api_url, false, $context);
-	        
-	        if ($result === FALSE) {
-	        	echo "Erro ao enviar arquivo para o Imgur";
-	        } else {
-	        	$response = json_decode($result, true);
-	        	$foto = $response['data']['link'];
-	        }
-
-	        $consulta = $db_con->prepare("UPDATE usuario set nome='$nome', telefone='$telefone', data_nascimento='$data_nascimento', fk_intuito_id='$intuito', foto='$foto' WHERE email='$email'");
-	        $resposta["sucesso"] = 1;
-	        $consulta->execute();
-	} else {
-		$consulta = $db_con->prepare("UPDATE usuario set nome='$nome', telefone='$telefone', data_nascimento='$data_nascimento', fk_intuito_id='$intuito' WHERE email='$email'");
-		$resposta["sucesso"] = 1;
-		$consulta->execute();
-	}
+	
+	$filename = $_FILES['caminho_foto']['tmp_name'];
+	$client_id="ce5d3a656e2aa51";
+	$handle = fopen($filename, "r");
+	$data = fread($handle, filesize($filename));
+	$pvars   = array('image' => base64_encode($data));
+	$timeout = 30;
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
+	curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
+	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Client-ID ' . $client_id));
+	curl_setopt($curl, CURLOPT_POST, 1);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $pvars);
+	$out = curl_exec($curl);
+	curl_close ($curl);
+	$pms = json_decode($out,true);
+	$img_url=$pms['data']['link'];
+	
+	$consulta = $db_con->prepare("UPDATE usuario set nome='$nome', telefone='$telefone', data_nascimento='$data_nascimento', fk_intuito_id='$intuito', foto='$img_rul' WHERE email='$email'");
+	$resposta["sucesso"] = 1;
 	
 	if ($consulta->execute()) {
 		$resposta["sucesso"] = 1;

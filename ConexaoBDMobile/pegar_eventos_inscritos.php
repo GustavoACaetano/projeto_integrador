@@ -24,7 +24,6 @@ if ($consulta->rowCount() > 0) {
         $consulta_evento = $db_con->prepare("SELECT * FROM evento where id = '" . $evento["id"] . "'");
         $consulta_evento->execute();
         $linha = $consulta_evento->fetch(PDO::FETCH_ASSOC);
-        $evento["id"] = $linha["id"];
         $evento["nome"] = $linha["nome"];
         $evento["preco"] = number_format($linha["preco"], 2, ',', '');
         $evento["data"] = $linha["data"];

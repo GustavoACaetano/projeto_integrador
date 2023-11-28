@@ -16,7 +16,7 @@ if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset
 	//$caminho_foto = trim($_GET["caminho_foto"]);
 	if ($_FILES["caminho_foto"]["size"] > 0){
 	        $client_id = "6d2b5be8400b2b3";
-	        $filename = $_FILES['foto']['tmp_name'];
+	        $filename = $_FILES['caminho_foto']['tmp_name'];
 	        
 	        $image_data = file_get_contents($filename);
 	        $image_data_base64 = base64_encode($image_data);

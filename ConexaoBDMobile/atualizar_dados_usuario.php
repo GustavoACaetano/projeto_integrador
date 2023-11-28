@@ -5,7 +5,7 @@ require_once('conexao_db.php');
 $resposta = array();
 
 // Verifica se o parametro id foi enviado na requisicao
-if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset($_GET["data"]) && isset($_GET["telefone"]) && isset($_FILES['caminho_foto'])) {
+if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset($_GET["data"]) && isset($_GET["telefone"])) {
 	
 	// Aqui sao obtidos os parametros
 	$id = $_GET['id'];

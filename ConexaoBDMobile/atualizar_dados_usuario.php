@@ -13,7 +13,7 @@ if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset
 	$email = trim($_GET["email"]);
 	$data = trim($_GET["data"]);
 	$telefone = trim($_GET["telefone"]);
-	
+	var_dump($_FILES['caminho_foto']);
 	$filename = $_FILES['caminho_foto']['tmp_name'];
 	var_dump($filename);
 	$client_id="ce5d3a656e2aa51";

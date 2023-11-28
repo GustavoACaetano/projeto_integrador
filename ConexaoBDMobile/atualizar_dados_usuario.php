@@ -14,11 +14,11 @@ if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset
 	$data = trim($_GET["data"]);
 	$telefone = trim($_GET["telefone"]);
 	
-	$filename = $_FILES['foto']['tmp_name'];
+	$filename = $_FILES['img']['tmp_name'];
 	$client_id="ce5d3a656e2aa51";
 	$handle = fopen($filename, "r");
 	$data = fread($handle, filesize($filename));
-	$pvars   = array('image' => base64_encode($data));
+	$pvars = array('image' => base64_encode($data));
 	$timeout = 30;
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
@@ -32,7 +32,7 @@ if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset
 	$pms = json_decode($out,true);
 	$img_url=$pms['data']['link'];
 	
-	$consulta = $db_con->prepare("UPDATE usuario set nome='$nome', telefone='$telefone', data_nascimento='$data_nascimento', fk_intuito_id='$intuito', foto='$img_rul' WHERE email='$email'");
+	$consulta = $db_con->prepare("UPDATE usuario set nome='$nome', telefone='$telefone', data_nascimento='$data', fk_intuito_id='$intuito', foto='$img_rul' WHERE email='$email'");
 	$resposta["sucesso"] = 1;
 	
 	if ($consulta->execute()) {

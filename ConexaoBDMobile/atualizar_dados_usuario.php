@@ -34,7 +34,7 @@ if (isset($_POST["id"]) && isset($_POST["nome"]) && isset($_POST["email"]) && is
 	$img_url=$pms['data']['link'];
 	error_log("img_url = " . $img_url, 0);
 	
-	$consulta = $db_con->prepare("UPDATE usuario set nome='$nome', telefone='$telefone', data_nascimento='$data_nascimento', fk_intuito_id='$intuito', foto='$img_rul' WHERE email='$email'");
+	$consulta = $db_con->prepare("UPDATE usuario set nome='$nome', telefone='$telefone', data_nascimento='$data_nascimento', fk_intuito_id='$intuito', foto='$img_url' WHERE email='$email'");
 	$resposta["sucesso"] = 1;
 	
 	if ($consulta->execute()) {

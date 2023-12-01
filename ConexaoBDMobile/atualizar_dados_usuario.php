@@ -11,10 +11,9 @@ if (isset($_POST["id"]) && isset($_POST["nome"]) && isset($_POST["email"]) && is
 	$id = $_POST['id'];
 	$nome = trim($_POST["nome"]);
 	$email = trim($_POST["email"]);
-	$data = trim($_POST["data"]);
+	$data_nascimento = trim($_POST["data"]);
 	$telefone = trim($_POST["telefone"]);
 
-	error_log(var_dump($_FILES["img"], 0));
 	$filename = $_FILES['img']['tmp_name'];
 	$client_id="ce5d3a656e2aa51";
 	$handle = fopen($filename, "r");
@@ -33,7 +32,7 @@ if (isset($_POST["id"]) && isset($_POST["nome"]) && isset($_POST["email"]) && is
 	$pms = json_decode($out,true);
 	$img_url=$pms['data']['link'];
 	
-	$consulta = $db_con->prepare("UPDATE usuario set nome='$nome', telefone='$telefone', data_nascimento='$data', fk_intuito_id='$intuito', foto='$img_rul' WHERE email='$email'");
+	$consulta = $db_con->prepare("UPDATE usuario set nome='$nome', telefone='$telefone', data_nascimento='$data_nascimento', fk_intuito_id='$intuito', foto='$img_rul' WHERE email='$email'");
 	$resposta["sucesso"] = 1;
 	
 	if ($consulta->execute()) {

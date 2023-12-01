@@ -29,6 +29,11 @@ if (isset($_GET["email"])) {
 			$resposta["id"] = $linha["id"];
 			$resposta["telefone"] = $linha["telefone"];
 
+			$consulta_intuito = $db_con->prepare("SELECT nome FROM intuito WHERE id = " . $linha["fk_intuito_id"]);
+			$consulta_intuito->execute();
+			$linha_intuito = $consulta->fetch(PDO::FETCH_ASSOC);
+			$resposta["intuito"] = $linha_intuito["nome"];
+
 			// Caso o usuario exista no BD, o cliente 
 			// recebe a chave "sucesso" com valor 1.
 			$resposta["sucesso"] = 1;

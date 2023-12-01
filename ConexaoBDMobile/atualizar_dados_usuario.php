@@ -8,7 +8,7 @@ $resposta = array();
 if (isset($_POST["id"]) && isset($_POST["nome"]) && isset($_POST["email"]) && isset($_POST["data"]) && isset($_POST["telefone"]) && isset($_FILES["img"])) {
 	
 	// Aqui sao obtidos os parametros
-	$id = $_GET['id'];
+	$id = $_POST['id'];
 	$nome = trim($_POST["nome"]);
 	$email = trim($_POST["email"]);
 	$data = trim($_POST["data"]);

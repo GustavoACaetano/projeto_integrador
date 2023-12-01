@@ -41,7 +41,7 @@ if(autenticar($db_con)) {
 	$nome = trim($_POST['nome']);
 	$preco = trim($_POST['preco']);
 	$descricao = trim($_POST['descricao']);
-	$data = trim($_POST['data']);
+	$data_evento = trim($_POST['data']);
 	$min_pessoas = trim($_POST['min_pessoas']);
 	$horario_inicio = trim($_POST['horario_inicio']);
 	$horario_fim = trim($_POST['horario_fim']);
@@ -74,7 +74,7 @@ if(autenticar($db_con)) {
 	$pms = json_decode($out,true);
 	$img_url=$pms['data']['link'];
 
-	$consulta_cidade = $db_con->prepare("SELECT * FROM cidade WHERE nome = '" .  $cidade . '");
+	$consulta_cidade = $db_con->prepare("SELECT * FROM cidade WHERE nome = '" .  $cidade . "'");
         $consulta_cidade->execute();
         if($consulta_cidade->rowCount() == 0){
             $id_estado = $linha_estado["id"];
@@ -134,7 +134,7 @@ if(autenticar($db_con)) {
 		// A proxima linha insere um novo produto no BD.
 		// A variavel consulta indica se a insercao foi feita corretamente ou nao.
 		$consulta = $db_con->prepare("INSERT INTO EVENTO(descricao, nome, foto, data, telefone, min_pessoas, horario_inicio, horario_fim, max_pessoas, FK_INTUITO_id, FK_ENDERECO_id, FK_USUARIO_id, FK_IDADE_PUBLICO_id, FK_CLASSIFICACAO_id)
-		VALUES('$descricao', '$nome', '$img_url', '$data', '$telefone', '$min_pessoas', '$horario_inicio', '$horario_fim', '$max_pessoas', '$intuito', '$id_endereco', '$id_usuario', '$idade_publico', '$classificacao')");
+		VALUES('$descricao', '$nome', '$img_url', '$data_evento', '$telefone', '$min_pessoas', '$horario_inicio', '$horario_fim', '$max_pessoas', '$intuito', '$id_endereco', '$id_usuario', '$idade_publico', '$classificacao')");
 		if ($consulta->execute()) {
 			// Se o produto foi inserido corretamente no servidor, o cliente 
 			// recebe a chave "sucesso" com valor 1

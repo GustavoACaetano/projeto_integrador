@@ -37,44 +37,44 @@ if(autenticar($db_con)) {
 	&& isset($_POST['horario_inicio']) && isset($_POST["estado"]) && isset($_POST["cidade"]) && isset($_POST["bairro"]) && isset($_POST["cep"]) && isset($_POST['horario_fim']) 
     && isset($_POST['max_pessoas']) && isset($_POST["numero"]) && isset($_POST['intuito']) && isset($_POST['endereco']) && isset($_POST['idade_publico']) && isset($_POST['classificacao'])) {
 
-		// Aqui sao obtidos os parametros
-		$nome = trim($_POST['nome']);
-		$preco = trim($_POST['preco']);
-		$descricao = trim($_POST['descricao']);
-		$data = trim($_POST['data']);
-		$min_pessoas = trim($_POST['min_pessoas']);
-		$horario_inicio = trim($_POST['horario_inicio']);
-		$horario_fim = trim($_POST['horario_fim']);
-		$max_pessoas = trim($_POST['max_pessoas']);
-		$intuito = $_POST['intuito'];
-		$endereco = trim($_POST['endereco']);
-		$idade_publico = $_POST['idade_publico'];
-		$estado = $_POST['estado'];
-		$cidade = trim($_POST['cidade']);
-		$bairro = trim($_POST['bairro']);
-		$cep = trim($_POST['cep']);
-		$numero = trim($_POST["numero"]);
-		$classificacao = $_POST['classificacao'];
+	// Aqui sao obtidos os parametros
+	$nome = trim($_POST['nome']);
+	$preco = trim($_POST['preco']);
+	$descricao = trim($_POST['descricao']);
+	$data = trim($_POST['data']);
+	$min_pessoas = trim($_POST['min_pessoas']);
+	$horario_inicio = trim($_POST['horario_inicio']);
+	$horario_fim = trim($_POST['horario_fim']);
+	$max_pessoas = trim($_POST['max_pessoas']);
+	$intuito = $_POST['intuito'];
+	$endereco = trim($_POST['endereco']);
+	$idade_publico = $_POST['idade_publico'];
+	$estado = $_POST['estado'];
+	$cidade = trim($_POST['cidade']);
+	$bairro = trim($_POST['bairro']);
+	$cep = trim($_POST['cep']);
+	$numero = trim($_POST["numero"]);
+	$classificacao = $_POST['classificacao'];
 
-		$filename = $_FILES['foto']['tmp_name'];
-		$client_id="ce5d3a656e2aa51";
-		$handle = fopen($filename, "r");
-		$data = fread($handle, filesize($filename));
-		$pvars   = array('image' => base64_encode($data));
-		$timeout = 30;
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
-		curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Client-ID ' . $client_id));
-		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $pvars);
-		$out = curl_exec($curl);
-		curl_close ($curl);
-		$pms = json_decode($out,true);
-		$img_url=$pms['data']['link'];
+	$filename = $_FILES['foto']['tmp_name'];
+	$client_id="ce5d3a656e2aa51";
+	$handle = fopen($filename, "r");
+	$data = fread($handle, filesize($filename));
+	$pvars   = array('image' => base64_encode($data));
+	$timeout = 30;
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_URL, 'https://api.imgur.com/3/image.json');
+	curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
+	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Client-ID ' . $client_id));
+	curl_setopt($curl, CURLOPT_POST, 1);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $pvars);
+	$out = curl_exec($curl);
+	curl_close ($curl);
+	$pms = json_decode($out,true);
+	$img_url=$pms['data']['link'];
 
-		$consulta_cidade = $db_con->prepare("SELECT * FROM cidade WHERE nome = " . $cidade);
+	$consulta_cidade = $db_con->prepare("SELECT * FROM cidade WHERE nome = '" .  $cidade . '");
         $consulta_cidade->execute();
         if($consulta_cidade->rowCount() == 0){
             $id_estado = $linha_estado["id"];

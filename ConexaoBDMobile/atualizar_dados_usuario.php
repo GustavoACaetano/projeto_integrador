@@ -5,7 +5,7 @@ require_once('conexao_db.php');
 $resposta = array();
 
 // Verifica se o parametro id foi enviado na requisicao
-if (isset($_POST["id"]) && isset($_POST["nome"]) && isset($_POST["email"]) && isset($_POST["data"]) && isset($_POST["telefone"]) && isset($_FILES["img"])) {
+if (isset($_POST["id"]) && isset($_POST["nome"]) && isset($_POST["email"]) && isset($_POST["data"]) && isset($_POST["telefone"]) && isset($_POST["intuito"]) && isset($_FILES["img"])) {
 	
 	// Aqui sao obtidos os parametros
 	$id = $_POST['id'];
@@ -13,6 +13,7 @@ if (isset($_POST["id"]) && isset($_POST["nome"]) && isset($_POST["email"]) && is
 	$email = trim($_POST["email"]);
 	$data_nascimento = trim($_POST["data"]);
 	$telefone = trim($_POST["telefone"]);
+	$intuito = $_POST["intuito"];
 
 	$filename = $_FILES['img']['tmp_name'];
 	$client_id="ce5d3a656e2aa51";

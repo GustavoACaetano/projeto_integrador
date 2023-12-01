@@ -5,14 +5,14 @@ require_once('conexao_db.php');
 $resposta = array();
 
 // Verifica se o parametro id foi enviado na requisicao
-if (isset($_GET["id"]) && isset($_GET["nome"]) && isset($_GET["email"]) && isset($_GET["data"]) && isset($_GET["telefone"]) && isset($_FILES["img"])) {
+if (isset($_POST["id"]) && isset($_POST["nome"]) && isset($_POST["email"]) && isset($_POST["data"]) && isset($_POST["telefone"]) && isset($_FILES["img"])) {
 	
 	// Aqui sao obtidos os parametros
 	$id = $_GET['id'];
-	$nome = trim($_GET["nome"]);
-	$email = trim($_GET["email"]);
-	$data = trim($_GET["data"]);
-	$telefone = trim($_GET["telefone"]);
+	$nome = trim($_POST["nome"]);
+	$email = trim($_POST["email"]);
+	$data = trim($_POST["data"]);
+	$telefone = trim($_POST["telefone"]);
 
 	error_log(var_dump($_FILES["img"], 0));
 	$filename = $_FILES['img']['tmp_name'];

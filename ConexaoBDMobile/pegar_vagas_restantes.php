@@ -25,14 +25,13 @@ if (isset($_POST["id"])) {
 
 	if ($consulta->execute()) {
 		if ($consulta->rowCount() > 0) {
-      $consulta_inscritos = $db_con->prepare("SELECT * FROM usuario_evento WHERE fk_evento_id = " . $id);
+			$consulta_inscritos = $db_con->prepare("SELECT * FROM usuario_evento WHERE fk_evento_id = " . $id);
 			$consulta_inscritos->execute();
 			$inscritos = $consulta_inscritos->rowCount();
 
       
 			$linha = $consulta->fetch(PDO::FETCH_ASSOC);
-
-      $resposta["vagas"] = $linha["max_pessoas"] - $inscritos;
+			$resposta["vagas"] = $linha["max_pessoas"] - $inscritos;
 			$resposta["sucesso"] = 1;
 			
 		} else {

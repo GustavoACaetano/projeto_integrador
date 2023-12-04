@@ -8,6 +8,10 @@
 
 // conexão com bd
 require_once('conexao_db.php');
+require_once('pegar_endereco.php');
+require_once('pegar_intuito.php');
+require_once('pegar_classificacao.php');
+require_once('pegar_publico_alvo.php');
 
 
 // array de resposta
@@ -47,36 +51,20 @@ if (isset($_POST["id"])) {
 			$classificacao = $linha["fk_classificacao_id"];
 
 
-			$consulta_intuito = $db_con->prepare("SELECT nome FROM intuito WHERE id = " . $intuito);
-			$consulta_intuito->execute();
-			$linha_intuito = $consulta_intuito->fetch(PDO::FETCH_ASSOC);
 
-			$resposta["intuito"] = $linha_intuito["nome"];
+			$resposta["intuito"] = pegarIntuito($intuito);
 
-			$consulta_usuario = $db_con->prepare("SELECT nome, email FROM usuario WHERE id = " . $usuario);
+			$consulta_usuario = $db_con->prepare("SELECT nome FROM usuario WHERE id = " . $usuario);
 			$consulta_usuario->execute();
 			$linha_usuario = $consulta_usuario->fetch(PDO::FETCH_ASSOC);
 
 			$resposta["usuario"] = $linha_usuario["nome"];
-			$resposta["email"] = $linha_usuario["email"];
 
-			$consulta_idade_publico = $db_con->prepare("SELECT intervalo FROM idade_publico WHERE id = " . $idade_publico);
-			$consulta_idade_publico->execute();
-			$linha_idade_publico = $consulta_idade_publico->fetch(PDO::FETCH_ASSOC);
+			$resposta["idade_publico"] = pegarPublicoAlvo($idade_publico);
 
-			$resposta["idade_publico"] = $linha_idade_publico["intervalo"];
+			$resposta["endereco"] = pegarEndereco($endereco);
 
-			$consulta_endereco = $db_con->prepare("SELECT * FROM endereco WHERE id = " . $endereco);
-			$consulta_endereco->execute();
-			$linha_endereco = $consulta_endereco->fetch(PDO::FETCH_ASSOC);
-
-			$resposta["endereco"] = $linha_endereco["descricao"];
-
-			$consulta_classificacao = $db_con->prepare("SELECT nome FROM classificacao WHERE id = " . $classificacao);
-			$consulta_classificacao->execute();
-			$linha_classificacao = $consulta_classificacao->fetch(PDO::FETCH_ASSOC);
-
-			$resposta["classificacao"] = $linha_classificacao["nome"];
+			$resposta["classificacao"] = pegarClassificacao($classificacao);
 
 			// Caso o produto exista no BD, o cliente 
 			// recebe a chave "sucesso" com valor 1.

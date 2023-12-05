@@ -8,7 +8,7 @@ $resposta = array();
 $resposta["eventos"] = array();
 $email = $_GET["email"];
 if(isset($_GET["limit"]) && isset($_GET["offset"])){
-    $consultaEmail = $db_con->prepare("SELECT * FROM usuario WHERE email='$email'");
+    $consultaEmail = $db_con->prepare("SELECT * FROM usuario WHERE email=$email");
     $consultaEmail->execute();
     $linhaUsuario = $consultaEmail->fetch(PDO::FETCH_ASSOC);
     $id_logado = intval($linhaUsuario['id']);

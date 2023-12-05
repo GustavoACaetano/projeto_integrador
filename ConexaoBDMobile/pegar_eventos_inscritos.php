@@ -8,7 +8,7 @@ $resposta = array();
 $resposta["eventos"] = array();
 $email = $_GET["email"];
 if(isset($_GET["limit"]) && isset($_GET["offset"])){
-    $consultaEmail = $db_con->prepare("SELECT * FROM usuario WHERE email='$email' LIMIT " . $_GET["limit"] . " OFFSET " . $_GET["offset"]);
+    $consultaEmail = $db_con->prepare("SELECT * FROM usuario WHERE email='$email'");
     $consultaEmail->execute();
     $linhaUsuario = $consultaEmail->fetch(PDO::FETCH_ASSOC);
     $id_logado = intval($linhaUsuario['id']);
@@ -21,7 +21,7 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
             $evento["id"] = $linha_tabela['fk_evento_id'];
             
     
-            $consulta_evento = $db_con->prepare("SELECT * FROM evento where id = '" . $evento["id"] . "'");
+            $consulta_evento = $db_con->prepare("SELECT * FROM evento where id = '" . $evento["id"] . "'  LIMIT " . $_GET["limit"] . " OFFSET " . $_GET["offset"]);
             $consulta_evento->execute();
             $linha = $consulta_evento->fetch(PDO::FETCH_ASSOC);
             $evento["nome"] = $linha["nome"];

@@ -19,10 +19,10 @@ $resposta = array();
 
 
 // Verifica se o parametro id foi enviado na requisicao
-if (isset($_POST["id"])) {
+if (isset($_GET["id"])) {
 	
 	// Aqui sao obtidos os parametros
-	$id = $_POST['id'];
+	$id = $_GET['id'];
 	
 	// Obtem do BD os detalhes do produto com id especificado na requisicao GET
 	$consulta = $db_con->prepare("SELECT * FROM evento WHERE id = $id");

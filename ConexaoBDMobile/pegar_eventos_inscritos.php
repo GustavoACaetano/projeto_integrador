@@ -7,34 +7,44 @@ require_once('conexao_db.php')
 $resposta = array();
 $resposta["eventos"] = array();
 $email = $_GET["email"];
-
-$consultaEmail = $db_con->prepare("SELECT * FROM usuario WHERE email='$email'");
-$consultaEmail->execute();
-$linhaUsuario = $consultaEmail->fetch(PDO::FETCH_ASSOC);
-$id_logado = intval($linhaUsuario['id']);
-
-$consulta = $db_con->prepare("SELECT * FROM usuario_evento WHERE fk_usuario_id =$id_logado");
-$consulta->execute();
-if ($consulta->rowCount() > 0) {
-    while($linha_tabela = $consulta->fetch(PDO::FETCH_ASSOC)){
-        $evento = array();
-        $evento["id"] = $linha_tabela['fk_evento_id'];
-        
-
-        $consulta_evento = $db_con->prepare("SELECT * FROM evento where id = '" . $evento["id"] . "'");
-        $consulta_evento->execute();
-        $linha = $consulta_evento->fetch(PDO::FETCH_ASSOC);
-        $evento["nome"] = $linha["nome"];
-        $evento["preco"] = number_format($linha["preco"], 2, ',', '');
-        $evento["data"] = $linha["data"];
-        $evento["horario_fim"] = $linha["horario_fim"];
-        $evento["horario_inicio"] = $linha["horario_inicio"];
-        $evento["foto"] = $linha["foto"];
-        // Adiciona o evento no array de eventos.
-        array_push($resposta["eventos"], $evento);
-        
+if(isset($_GET["limit"]) && isset($_GET["offset"]){
+    $consultaEmail = $db_con->prepare("SELECT * FROM usuario WHERE email='$email' LIMIT " . $_GET["limit"] . " OFFSET " . $_GET["offset"]);
+    $consultaEmail->execute();
+    $linhaUsuario = $consultaEmail->fetch(PDO::FETCH_ASSOC);
+    $id_logado = intval($linhaUsuario['id']);
+    
+    $consulta = $db_con->prepare("SELECT * FROM usuario_evento WHERE fk_usuario_id =$id_logado");
+    $consulta->execute();
+    if ($consulta->rowCount() > 0) {
+        while($linha_tabela = $consulta->fetch(PDO::FETCH_ASSOC)){
+            $evento = array();
+            $evento["id"] = $linha_tabela['fk_evento_id'];
+            
+    
+            $consulta_evento = $db_con->prepare("SELECT * FROM evento where id = '" . $evento["id"] . "'");
+            $consulta_evento->execute();
+            $linha = $consulta_evento->fetch(PDO::FETCH_ASSOC);
+            $evento["nome"] = $linha["nome"];
+            $evento["preco"] = number_format($linha["preco"], 2, ',', '');
+            $evento["data"] = $linha["data"];
+            $evento["horario_fim"] = $linha["horario_fim"];
+            $evento["horario_inicio"] = $linha["horario_inicio"];
+            $evento["foto"] = $linha["foto"];
+            // Adiciona o evento no array de eventos.
+            array_push($resposta["eventos"], $evento);
+            
+        }
     }
 }
-return json_encode($resposta);
+else {
+	// Se a requisicao foi feita incorretamente, ou seja, os parametros 
+	// nao foram enviados corretamente para o servidor, o cliente 
+	// recebe a chave "sucesso" com valor 0. A chave "erro" indica o 
+	// motivo da falha.
+	$resposta["sucesso"] = 0;
+	$resposta["erro"] = "Campo requerido não preenchido";
+}
+
 $db_con = null;
+return json_encode($resposta);
 ?>

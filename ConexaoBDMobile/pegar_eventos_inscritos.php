@@ -2,7 +2,7 @@
 // esse arquivo CONSULTA os eventos que
 // o usuario logado esta inscrito
 
-require_once('conexao_db.php')
+require_once('conexao_db.php');
 // array for JSON resposta
 $resposta = array();
 $resposta["eventos"] = array();

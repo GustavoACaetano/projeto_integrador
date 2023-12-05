@@ -34,6 +34,7 @@ if(isset($_GET["limit"]) && isset($_GET["offset"]){
             array_push($resposta["eventos"], $evento);
             
         }
+	$resposta["sucesso"] = 1;
     }
 }
 else {

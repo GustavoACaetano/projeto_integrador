@@ -52,7 +52,7 @@ if (isset($_POST["id"])) {
 
 
 
-			$resposta["intuito"] = pegarIntuito($intuito);
+			$resposta["intuito"] = pegarIntuito($db_con, $intuito);
 
 			$consulta_usuario = $db_con->prepare("SELECT nome FROM usuario WHERE id = " . $usuario);
 			$consulta_usuario->execute();
@@ -60,11 +60,11 @@ if (isset($_POST["id"])) {
 
 			$resposta["usuario"] = $linha_usuario["nome"];
 
-			$resposta["idade_publico"] = pegarPublicoAlvo($idade_publico);
+			$resposta["idade_publico"] = pegarPublicoAlvo($db_con, $idade_publico);
 
-			$resposta["endereco"] = pegarEndereco($endereco);
+			$resposta["endereco"] = pegarEndereco($db_con, $endereco);
 
-			$resposta["classificacao"] = pegarClassificacao($classificacao);
+			$resposta["classificacao"] = pegarClassificacao($db_con, $classificacao);
 
 			// Caso o produto exista no BD, o cliente 
 			// recebe a chave "sucesso" com valor 1.

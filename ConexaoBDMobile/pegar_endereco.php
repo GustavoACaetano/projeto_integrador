@@ -7,9 +7,8 @@ function pegarEndereco($db_con, $endereco){
 
   $consulta_bairro = $db_con->prepare("SELECT * FROM bairro WHERE id = " . $linha_endereco["fk_bairro_id"]);
   $consulta_bairro->execute();
-  $linha_bairro = $consulta_endereco->fetch(PDO::FETCH_ASSOC);
-  error_log(var_dump($linha_endereco["fk_bairro_id"]));
-  error_log(var_dump($linha_bairro["fk_cidade_id"]));
+  $linha_bairro = $consulta_bairro->fetch(PDO::FETCH_ASSOC);
+  
   $consulta_cidade = $db_con->prepare("SELECT * FROM cidade WHERE id = " . $linha_bairro["fk_cidade_id"]);
   $consulta_cidade->execute();
   $linha_cidade = $consulta_cidade->fetch(PDO::FETCH_ASSOC);

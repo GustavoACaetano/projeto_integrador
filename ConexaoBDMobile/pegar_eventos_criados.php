@@ -29,8 +29,6 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
             $evento["foto"] = $linha["foto"];
             // Adiciona o evento no array de eventos.
             array_push($resposta["eventos"], $evento);
-            error_log(var_dump($evento));
-            error_log(var_dump($resposta));
         }
         $resposta["sucesso"] = 1;
     }else{

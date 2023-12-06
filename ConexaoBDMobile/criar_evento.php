@@ -23,7 +23,6 @@ if(autenticar($db_con)) {
 	//  nome
 	//  foto
 	//  data
-	//  telefone
 	//  min_pessoas 
 	//  preco
 	//  horario_inicio
@@ -134,8 +133,8 @@ if(autenticar($db_con)) {
 
 		// A proxima linha insere um novo produto no BD.
 		// A variavel consulta indica se a insercao foi feita corretamente ou nao.
-		$consulta = $db_con->prepare("INSERT INTO EVENTO(descricao, nome, foto, data, telefone, min_pessoas, horario_inicio, horario_fim, max_pessoas, FK_INTUITO_id, FK_ENDERECO_id, FK_USUARIO_id, FK_IDADE_PUBLICO_id, FK_CLASSIFICACAO_id)
-		VALUES('$descricao', '$nome', '$img_url', '$data_evento', '$telefone', '$min_pessoas', '$horario_inicio', '$horario_fim', '$max_pessoas', '$intuito', '$id_endereco', '$id_usuario', '$idade_publico', '$classificacao')");
+		$consulta = $db_con->prepare("INSERT INTO EVENTO(descricao, nome, foto, data, min_pessoas, horario_inicio, horario_fim, max_pessoas, FK_INTUITO_id, FK_ENDERECO_id, FK_USUARIO_id, FK_IDADE_PUBLICO_id, FK_CLASSIFICACAO_id)
+		VALUES('$descricao', '$nome', '$img_url', '$data_evento', '$min_pessoas', '$horario_inicio', '$horario_fim', '$max_pessoas', '$intuito', '$id_endereco', '$id_usuario', '$idade_publico', '$classificacao')");
 		if ($consulta->execute()) {
 			// Se o produto foi inserido corretamente no servidor, o cliente 
 			// recebe a chave "sucesso" com valor 1

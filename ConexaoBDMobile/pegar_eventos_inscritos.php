@@ -12,7 +12,10 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
     $consultaEmail->execute();
     $linhaUsuario = $consultaEmail->fetch(PDO::FETCH_ASSOC);
     $id_logado = intval($linhaUsuario['id']);
-    
+	error_log($id_logado);
+	error_log($linhaUsuario['id']);
+	error_log($email);
+	
     $consulta = $db_con->prepare("SELECT * FROM usuario_evento WHERE fk_usuario_id =$id_logado");
     $consulta->execute();
     if ($consulta->rowCount() > 0) {

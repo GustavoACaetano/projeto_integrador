@@ -3,13 +3,13 @@ require_once('conexao_db.php');
 
 // array de resposta
 $resposta = array();
-error_log(var_dump($_POST["email"]));
-error_log(var_dump($_POST["id_evento"]));
+error_log(var_dump($_GET["email"]));
+error_log(var_dump($_GET["id_evento"]));
 // Verifica se o parametro id foi enviado na requisicao
-if (isset($_POST["email"]) && isset($_POST["id_evento"])) {
+if (isset($_GET["email"]) && isset($_GET["id_evento"])) {
 	
-	$email = trim($_POST["email"]);
-    $id_evento = $_POST["id_evento"];
+	$email = trim($_GET["email"]);
+    $id_evento = $_GET["id_evento"];
 	
 	$consulta_usuario = $db_con->prepare("SELECT * from usuario where email = '$email'");
     $consulta_usuario->execute();

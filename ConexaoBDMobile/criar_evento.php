@@ -99,7 +99,7 @@ if(autenticar($db_con)) {
         $consulta_bairro->execute();
         if($consulta_bairro->rowCount() == 0){
             $id_cidade = $linha_cidade["id"];
-            $consulta_criar_bairro = $db_con->prepare("INSERT INTO bairro(nome, FK_ESTADO_id) VALUES('$bairro', '$id_cidade')");
+            $consulta_criar_bairro = $db_con->prepare("INSERT INTO bairro(nome, FK_cidade_id) VALUES('$bairro', '$id_cidade')");
             if ($consulta_criar_bairro->execute()) {
                 // se a consulta deu certo, indicamos sucesso na operação.
                 $resposta["sucesso"] = 1;

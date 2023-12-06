@@ -7,14 +7,14 @@ require_once('conexao_db.php');
 // array for JSON resposta
 $resposta = array();
 $resposta["eventos"] = array();
-$email = $_GET["logado"];
+$email = $_GET["email"];
 if(isset($_GET["limit"]) && isset($_GET["offset"])){
-    $consultaEmail = $db_con->prepare("SELECT * FROM usuario WHERE email=$email");
+    $consultaEmail = $db_con->prepare("SELECT * FROM usuario WHERE email='$email'");
     $consultaEmail->execute();
     $linhaUsuario = $consultaEmail->fetch(PDO::FETCH_ASSOC);
     $id_logado = intval($linhaUsuario['id']);
     
-    $consulta = $db_con->prepare("SELECT * FROM evento WHERE fk_usuario_id =$id_logado LIMIT " . $_GET["limit"] . " OFFSET " . $_GET["offset"]);
+    $consulta = $db_con->prepare("SELECT * FROM evento WHERE fk_usuario_id = '$id_logado' LIMIT " . $_GET["limit"] . " OFFSET " . $_GET["offset"]);
     $consulta->execute();
     if ($consulta->rowCount() > 0) {
         while($linha = $consulta->fetch(PDO::FETCH_ASSOC)){

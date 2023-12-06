@@ -126,7 +126,7 @@ if(autenticar($db_con)) {
 
 		$id_endereco = $linha_endereco["id"];
 
-		$consulta_usuario = $db_con->prepare("SELECT id FROM usuario WHERE email = " . $email);
+		$consulta_usuario = $db_con->prepare("SELECT id FROM usuario WHERE email = '" . $email . "'");
 		$consulta_usuario->execute();
 		$linha_usuario = $consulta_usuario->fetch(PDO::FETCH_ASSOC);
 

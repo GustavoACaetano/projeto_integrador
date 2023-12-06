@@ -21,7 +21,7 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
             $evento["id"] = $linha_tabela['fk_evento_id'];
             
     
-            $consulta_evento = $db_con->prepare("SELECT * FROM evento where id = '" . $evento["id"] . "');
+            $consulta_evento = $db_con->prepare("SELECT * FROM evento where id = '" . $evento["id"] . "'");
             $consulta_evento->execute();
             $linha = $consulta_evento->fetch(PDO::FETCH_ASSOC);
             $evento["nome"] = $linha["nome"];

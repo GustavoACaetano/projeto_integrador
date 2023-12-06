@@ -5,7 +5,7 @@ require_once('conexao_db.php');
 $resposta = array();
 
 // Verifica se o parametro id foi enviado na requisicao
-if (isset($_POST["email"]) isset($_POST["id_evento"])) {
+if (isset($_POST["email"]) && isset($_POST["id_evento"])) {
 	
 	$email = trim($_POST["email"]);
     $id_evento = $_POST["id_evento"];

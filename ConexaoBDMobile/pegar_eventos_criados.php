@@ -44,6 +44,7 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
 	$resposta["sucesso"] = 0;
 	$resposta["erro"] = "Campo requerido não preenchido";
 }
-return json_encode($resposta);
 $db_con = null;
+
+echo json_encode($resposta);
 ?>

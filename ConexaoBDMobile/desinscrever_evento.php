@@ -3,7 +3,8 @@ require_once('conexao_db.php');
 
 // array de resposta
 $resposta = array();
-
+error_log(var_dump($_POST["email"]));
+error_log(var_dump($_POST["id_evento"]));
 // Verifica se o parametro id foi enviado na requisicao
 if (isset($_POST["email"]) && isset($_POST["id_evento"])) {
 	

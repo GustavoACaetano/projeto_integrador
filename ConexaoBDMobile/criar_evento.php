@@ -90,12 +90,12 @@ if(autenticar($db_con)) {
                 $resposta["sucesso"] = 0;
                 $resposta["erro"] = "erro ao criar cidade BD: " . $consulta_criar_cidade->$error;
             }
-            $consulta_cidade = $db_con->prepare("SELECT id FROM cidade WHERE nome = " . $cidade);
+            $consulta_cidade = $db_con->prepare("SELECT id FROM cidade WHERE nome = '" . $cidade . "'");
             $consulta_cidade->execute();
         }
         $linha_cidade = $consulta_cidade->fetch(PDO::FETCH_ASSOC);
 
-        $consulta_bairro = $db_con->prepare("SELECT * FROM bairro WHERE nome = " . $bairro);
+        $consulta_bairro = $db_con->prepare("SELECT * FROM bairro WHERE nome = '" . $bairro . "'");
         $consulta_bairro->execute();
         if($consulta_bairro->rowCount() == 0){
             $id_cidade = $linha_cidade["id"];

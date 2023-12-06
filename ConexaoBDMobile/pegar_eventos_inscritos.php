@@ -12,11 +12,11 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
     $consultaEmail->execute();
     $linhaUsuario = $consultaEmail->fetch(PDO::FETCH_ASSOC);
     $id_logado = intval($linhaUsuario['id']);
-	error_log($id_logado);
-	error_log($linhaUsuario['id']);
-	error_log($email);
+	error_log(var_dump($id_logado));
+	error_log(var_dump($linhaUsuario['id']));
+	error_log(var_dump($email));
 	
-    $consulta = $db_con->prepare("SELECT * FROM usuario_evento WHERE fk_usuario_id =$id_logado");
+    $consulta = $db_con->prepare("SELECT * FROM usuario_evento WHERE fk_usuario_id = '$id_logado'  LIMIT " . $_GET["limit"] . " OFFSET " . $_GET["offset"]);
     $consulta->execute();
     if ($consulta->rowCount() > 0) {
         while($linha_tabela = $consulta->fetch(PDO::FETCH_ASSOC)){
@@ -24,7 +24,7 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
             $evento["id"] = $linha_tabela['fk_evento_id'];
             
     
-            $consulta_evento = $db_con->prepare("SELECT * FROM evento where id = '" . $evento["id"] . "'  LIMIT " . $_GET["limit"] . " OFFSET " . $_GET["offset"]);
+            $consulta_evento = $db_con->prepare("SELECT * FROM evento where id = '" . $evento["id"]);
             $consulta_evento->execute();
             $linha = $consulta_evento->fetch(PDO::FETCH_ASSOC);
             $evento["nome"] = $linha["nome"];

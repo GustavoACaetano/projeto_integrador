@@ -13,8 +13,7 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
     $consultaEmail->execute();
     $linhaUsuario = $consultaEmail->fetch(PDO::FETCH_ASSOC);
     $id_logado = intval($linhaUsuario['id']);
-    error_log(var_dump($email));
-    error_log(var_dump($id_logado));
+
     $consulta = $db_con->prepare("SELECT * FROM evento WHERE fk_usuario_id = '$id_logado' LIMIT " . $_GET["limit"] . " OFFSET " . $_GET["offset"]);
     $consulta->execute();
     if ($consulta->rowCount() > 0) {
@@ -30,9 +29,12 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
             $evento["foto"] = $linha["foto"];
             // Adiciona o evento no array de eventos.
             array_push($resposta["eventos"], $evento);
+            error_log(var_dump($evento));
+            error_log(var_dump($resposta));
         }
         $resposta["sucesso"] = 1;
     }else{
+        error_log("sei");
         $resposta["sucesso"] = 0;
         $resposta["erro"] = "Nenhum evento criado";
     }

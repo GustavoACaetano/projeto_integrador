@@ -55,6 +55,7 @@ if(autenticar($db_con)) {
 	$cep = trim($_POST['cep']);
 	$numero = trim($_POST["numero"]);
 	$classificacao = $_POST['classificacao'];
+	$email = $_POST["email"];
 
 	$filename = $_FILES['foto']['tmp_name'];
 	$client_id="ce5d3a656e2aa51";
@@ -109,7 +110,7 @@ if(autenticar($db_con)) {
                 $resposta["sucesso"] = 0;
                 $resposta["erro"] = "erro ao criar bairro BD: " . $consulta_criar_bairro->$error;
             }
-            $consulta_bairro = $db_con->prepare("SELECT id FROM bairro WHERE nome = " . $bairro);
+            $consulta_bairro = $db_con->prepare("SELECT id FROM bairro WHERE nome = '" . $bairro . "'");
             $consulta_bairro->execute();
         }
         $linha_bairro = $consulta_bairro->fetch(PDO::FETCH_ASSOC);
@@ -118,7 +119,7 @@ if(autenticar($db_con)) {
 		$consulta_endereco = $db_con->prepare("INSERT INTO endereco(numero, cep, descricao, FK_BAIRRO_id) VALUES('$numero', '$cep', '$endereco', '$id_bairro')");
 		$consulta_endereco->execute();
 		
-		$consulta_endereco = $db_con->prepare("SELECT id FROM endereco WHERE numero = " . $numero . " and cep = ". $cep);
+		$consulta_endereco = $db_con->prepare("SELECT id FROM endereco WHERE numero = '" . $numero . "' and cep = '". $cep . "'");
 		$consulta_endereco->execute();
 		$linha_endereco = $consulta_endereco->fetch(PDO::FETCH_ASSOC);
 

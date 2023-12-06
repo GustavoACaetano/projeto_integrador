@@ -16,25 +16,26 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
     $consulta = $db_con->prepare("SELECT * FROM usuario_evento WHERE fk_usuario_id = '$id_logado'  LIMIT " . $_GET["limit"] . " OFFSET " . $_GET["offset"]);
     $consulta->execute();
     if ($consulta->rowCount() > 0) {
-        while($linha_tabela = $consulta->fetch(PDO::FETCH_ASSOC)){
-            $evento = array();
-            $evento["id"] = $linha_tabela['fk_evento_id'];
+	    while($linha_tabela = $consulta->fetch(PDO::FETCH_ASSOC)){
+		    $evento = array();
+		    $evento["id"] = $linha_tabela['fk_evento_id'];
             
-    
-            $consulta_evento = $db_con->prepare("SELECT * FROM evento where id = '" . $evento["id"] . "'");
-            $consulta_evento->execute();
-            $linha = $consulta_evento->fetch(PDO::FETCH_ASSOC);
-            $evento["nome"] = $linha["nome"];
-            $evento["preco"] = number_format($linha["preco"], 2, ',', '');
-            $evento["data"] = $linha["data"];
-            $evento["horario_fim"] = $linha["horario_fim"];
-            $evento["horario_inicio"] = $linha["horario_inicio"];
-            $evento["foto"] = $linha["foto"];
-            // Adiciona o evento no array de eventos.
-            array_push($resposta["eventos"], $evento);
-            
-        }
-	$resposta["sucesso"] = 1;
+	            $consulta_evento = $db_con->prepare("SELECT * FROM evento where id = '" . $evento["id"] . "'");
+	            $consulta_evento->execute();
+	            $linha = $consulta_evento->fetch(PDO::FETCH_ASSOC);
+	            $evento["nome"] = $linha["nome"];
+	            $evento["preco"] = number_format($linha["preco"], 2, ',', '');
+	            $evento["data"] = $linha["data"];
+	            $evento["horario_fim"] = $linha["horario_fim"];
+	            $evento["horario_inicio"] = $linha["horario_inicio"];
+	            $evento["foto"] = $linha["foto"];
+	            // Adiciona o evento no array de eventos.
+	            array_push($resposta["eventos"], $evento);
+	}
+	    $resposta["sucesso"] = 1;
+    }else{
+	    $resposta["erro"] = "Sem eventos inscritos";
+	    $resposta["sucesso"] = 0;
     }
 }
 else {

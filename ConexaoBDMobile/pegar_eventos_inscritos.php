@@ -48,5 +48,5 @@ else {
 }
 
 $db_con = null;
-return json_encode($resposta);
+echo json_encode($resposta);
 ?>

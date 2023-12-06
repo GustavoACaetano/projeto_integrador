@@ -74,9 +74,26 @@ if(autenticar($db_con)) {
 	$pms = json_decode($out,true);
 	$img_url=$pms['data']['link'];
 
+	$consulta_intuito = $db_con->prepare("SELECT * from intuito where nome = '$intuito'");
+	$consulta_intuito->execute();
+	$intuito = $consulta_intuito->fetch(PDO::FETCH_ASSOC)["id"];
+
+	$consulta_classificacao = $db_con->prepare("SELECT * from classificacao where nome = '$classificacao'");
+	$consulta_classificacao->execute();
+	$classificacao = $consulta_classificacao->fetch(PDO::FETCH_ASSOC)["id"];
+
+	$consulta_idade_publico = $db_con->prepare("SELECT * from idade_publico where intervalo = '$idade_publico'");
+	$consulta_idade_publico->execute();
+	$idade_publico = $consulta_idade_publico->fetch(PDO::FETCH_ASSOC)["id"];
+
+	
 	$consulta_cidade = $db_con->prepare("SELECT * FROM cidade WHERE nome = '" .  $cidade . "'");
         $consulta_cidade->execute();
         if($consulta_cidade->rowCount() == 0){
+			$consulta_estado = $db_con->prepare("SELECT * from estado where nome = '$estado'");
+			$consulta_estado->execute();
+			$linha_estado = $consulta_estado->fetch(PDO::FETCH_ASSOC);
+
             $id_estado = $linha_estado["id"];
             $consulta_criar_cidade = $db_con->prepare("INSERT INTO cidade(nome, FK_ESTADO_id) VALUES('$cidade', '$id_estado')");
             if ($consulta_criar_cidade->execute()) {

@@ -14,7 +14,7 @@ if(password_verify($senha_antiga, $senha_salva)){
     $token = password_hash($senha_nova, PASSWORD_DEFAULT);
     $consulta = $db_con->prepare("UPDATE usuario set token = '$token' where email = '$email'");
     if($consulta->execute()){
-        $sucesso["sucesso"] = 1;
+        $resposta["sucesso"] = 1;
     } else {
         $resposta["sucesso"] = 0;
         $resposta["erro"] = "Erro no Banco de Dados = " . $consulta->$error;

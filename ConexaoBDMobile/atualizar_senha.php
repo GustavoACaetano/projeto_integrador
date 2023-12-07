@@ -2,8 +2,8 @@
 require_once("conexao_db.php");
 
 $email = $_GET["email"];
-$senha_antiga = $_GET["senha_antiga"];
-$senha_nova = $_GET["senha_nova"];
+$senha_antiga = trim($_GET["senha_antiga"]);
+$senha_nova = trim($_GET["senha_nova"]);
 
 $consulta_usuario = $db_con->prepare("SELECT * from usuario where email = '$email'");
 $consulta_usuario->execute();

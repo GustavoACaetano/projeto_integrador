@@ -1,9 +1,9 @@
 <?php
 require_once("conexao_db.php");
 
-$email = $_POST["email"];
-$senha_antiga = trim($_POST["senha_antiga"]);
-$senha_nova = trim($_POST["senha_nova"]);
+$email = $_GET["email"];
+$senha_antiga = trim($_GET["senha_antiga"]);
+$senha_nova = trim($_GET["senha_nova"]);
 
 $consulta_usuario = $db_con->prepare("SELECT * from usuario where email = '$email'");
 $consulta_usuario->execute();

@@ -3,9 +3,11 @@
 require_once("conexao_db");
 $resposta = array();
 $resposta["eventos"] = array();
-if(isset($_GET["pesquisa"])){
+if(isset($_GET["pesquisa"]) && isset($_GET["limit"]) && isset($_GET["offset"])){
+  $limit = $_GET["limit"];
+  $offset = $_GET["offset"];
   $pesquisa = $_GET["pesquisa"];
-  $consulta_pesquisa = $db_con->prepare("SELECT * FROM evento WHERE nome LIKE '%$pesquisa%'");
+  $consulta_pesquisa = $db_con->prepare("SELECT * FROM evento WHERE nome LIKE '%$pesquisa%' LIMIT '$limit' OFFSET '$offset'");
   if($consulta_pesquisa->execute()){
       while($linha = $consulta_pesquisa->fetch(PDO::FETCH_ASSOC)){
         $evento = array();

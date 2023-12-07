@@ -23,4 +23,7 @@ if(password_verify($senha_antiga, $senha_salva)){
     $resposta["sucesso"] = 0;
     $resposta["erro"] = "O campo de senha antiga está errado.";
 }
+
+$db_con = null;
+echo json_decode($resposta);
 ?>

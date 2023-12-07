@@ -25,5 +25,5 @@ if(password_verify($senha_antiga, $senha_salva)){
 }
 
 $db_con = null;
-echo json_decode($resposta);
+echo json_encode($resposta);
 ?>

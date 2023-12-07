@@ -9,6 +9,10 @@ $consulta_usuario = $db_con->prepare("SELECT * from usuario where email = '$emai
 $consulta_usuario->execute();
 $senha_salva = $consulta_usuario->fetch(PDO::FETCH_ASSOC)["token"];
 
+error_log(var_dump($senha_antiga));
+error_log(var_dump(password_hash($senha_antiga, PASSWORD_DEFAULT)));
+error_log(var_dump($senha_salva));
+
 $resposta = array();
 if(password_verify($senha_antiga, $senha_salva)){
     $token = password_hash($senha_nova, PASSWORD_DEFAULT);

@@ -21,6 +21,6 @@ if(password_verify($senha_antiga, $senha_salva)){
     }
 }else{
     $resposta["sucesso"] = 0;
-    $resposta["erro"] = "O campo de senha antiga está errado."
+    $resposta["erro"] = "O campo de senha antiga está errado.";
 }
 ?>

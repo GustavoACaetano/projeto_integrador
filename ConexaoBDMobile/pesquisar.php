@@ -13,21 +13,22 @@ if(isset($_GET["pesquisa"]) && isset($_GET["limit"]) && isset($_GET["offset"])){
         $evento = array();
         
         $evento["id"] = $linha["id"];
-				$evento["foto"] = $linha["foto"];
+	$evento["foto"] = $linha["foto"];
 
-				$evento["nome"] = $linha["nome"];
-				$evento["preco"] = number_format($linha["preco"], 2, ',', '');
-				$evento["data"] = $linha["data"];
-				$evento["horario_fim"] = $linha["horario_fim"];
-				$evento["horario_inicio"] = $linha["horario_inicio"];
+	$evento["nome"] = $linha["nome"];
+	$evento["preco"] = number_format($linha["preco"], 2, ',', '');
+	$evento["data"] = $linha["data"];
+	$evento["horario_fim"] = $linha["horario_fim"];
+	$evento["horario_inicio"] = $linha["horario_inicio"];
 
-				// Adiciona o evento no array de eventos.
-				array_push($resposta["eventos"], $evento);
+	// Adiciona o evento no array de eventos.
+	array_push($resposta["eventos"], $evento);
       }
       $resposta["sucesso"] = 1;
   }else {
       $resposta["sucesso"] = 0;
       $resposta["erro"] = "Erro no Banco de Dados = " . $consulta_pesquisa->$error;
+  }
 }else {
 	// Se a requisicao foi feita incorretamente, ou seja, os parametros 
 	// nao foram enviados corretamente para o servidor, o cliente 

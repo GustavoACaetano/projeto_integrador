@@ -1,6 +1,6 @@
 <?php
 
-require_once("conexao_db");
+require_once("conexao_db.php");
 $resposta = array();
 $resposta["eventos"] = array();
 if(isset($_GET["pesquisa"]) && isset($_GET["limit"]) && isset($_GET["offset"])){

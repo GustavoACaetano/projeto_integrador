@@ -8,35 +8,7 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
 	
     $limit = $_GET["limit"];
     $offset = $_GET["offset"];
-  if(isset($_GET["padrao"]) && $_GET["padrao"] == "true"){
-    $consulta_filtrado = $db_con->prepare("SELECT id FROM (SELECT e.id, (COUNT(ue.fk_evento_id) * 100 / e.max_pessoas) AS porcentagem FROM evento e LEFT JOIN usuario_evento ue ON ue.fk_evento_id = e.id GROUP BY e.id, e.max_pessoas) AS subquery WHERE porcentagem < 100 ORDER BY porcentagem DESC LIMIT " . $limit . " OFFSET " . $offset);
-
-  	$consulta_filtrado->execute();
-	  if ($consulta_filtrado->rowCount() > 0) {
-		  while ($linha_filtro = $consulta_filtrado->fetch(PDO::FETCH_ASSOC)) {
-  			$id_evento = $linha_filtro["id"];
-  			$consulta = $db_con->prepare("SELECT * FROM evento WHERE evento.id = $id_evento");
-  			$consulta->execute();
-  			$linha = $consulta->fetch(PDO::FETCH_ASSOC);
-  			$evento = array();
-  			
-  			$evento["id"] = $linha["id"];
-			
-
-
-  			$evento["nome"] = $linha["nome"];
-  			$evento["preco"] = number_format($linha["preco"], 2, ',', '');
-  			$evento["data"] = $linha["data"];
-  			$evento["horario_fim"] = $linha["horario_fim"];
-  			$evento["horario_inicio"] = $linha["horario_inicio"];
-  			$evento["foto"] = $linha["foto"];
-
-			  // Adiciona o evento no array de eventos.
-			  array_push($resposta["eventos"], $evento);
-		  }
-      $resposta["sucesso"] = 1;
-    }
-  }else{
+  
     $string_consulta = "SELECT * from evento where";
     if($_GET["preco"] != "0"){
       $array_precos = [" preco >= 0.00 and preco < 10.00", " preco >= 10.00 and preco < 20.00", " preco >= 20.00 and preco < 30.00", " preco >= 30.00 and preco < 50.00", " preco >= 50.00 and preco < 100.00",
@@ -105,7 +77,6 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
 	    $resposta["erro"] = "Erro no BD: " . $consulta->$error;
     }
     
-  }
 }else{
   $resposta["sucesso"] = 0;
   $resposta["erro"] = "Campo requirido não preenchido";

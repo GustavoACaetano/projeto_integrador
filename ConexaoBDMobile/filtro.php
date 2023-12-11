@@ -76,14 +76,13 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
       }
     }
 
+    $limit = $_GET["limit"];
+    $offset = $_GET["offset"];
+    $string_consulta .= " LIMIT $limit OFFSET $offset";
     $consulta = $db_con->prepare($string_consulta);
     if($consulta->execute()){
       if ($consulta->rowCount() > 0) {
-  		  while ($linha_filtro = $consulta_filtrado->fetch(PDO::FETCH_ASSOC)) {
-    			$id_evento = $linha_filtro["id"];
-    			$consulta = $db_con->prepare("SELECT * FROM evento WHERE evento.id = $id_evento");
-    			$consulta->execute();
-    			$linha = $consulta->fetch(PDO::FETCH_ASSOC);
+  		  while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
     			$evento = array();
     			
     			$evento["id"] = $linha["id"];

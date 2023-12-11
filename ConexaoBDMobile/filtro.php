@@ -5,6 +5,9 @@ $resposta = array();
 $resposta["eventos"] = array();
 
 if(isset($_GET["limit"]) && isset($_GET["offset"])){
+	
+    $limit = $_GET["limit"];
+    $offset = $_GET["offset"];
   if(isset($_GET["padrao"]) && $_GET["padrao"] == "true"){
     $consulta_filtrado = $db_con->prepare("SELECT id FROM (SELECT e.id, (COUNT(ue.fk_evento_id) * 100 / e.max_pessoas) AS porcentagem FROM evento e LEFT JOIN usuario_evento ue ON ue.fk_evento_id = e.id GROUP BY e.id, e.max_pessoas) AS subquery WHERE porcentagem < 100 ORDER BY porcentagem DESC LIMIT " . $limit . " OFFSET " . $offset);
 
@@ -76,8 +79,6 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
       }
     }
 
-    $limit = $_GET["limit"];
-    $offset = $_GET["offset"];
     $string_consulta .= " LIMIT $limit OFFSET $offset";
     $consulta = $db_con->prepare($string_consulta);
     if($consulta->execute()){

@@ -12,7 +12,7 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
     $string_consulta = "SELECT * from evento where";
     if($_GET["preco"] != "0"){
       $array_precos = [" preco >= 0.00 and preco < 10.00", " preco >= 10.00 and preco < 20.00", " preco >= 20.00 and preco < 30.00", " preco >= 30.00 and preco < 50.00", " preco >= 50.00 and preco < 100.00",
-        " preco >= 100.00 and preco < 200.00", " preco >= 200.00 and preco < 500.00", " preco >= 500.00 and preco < 1000.00", " preco <= 1000.00 and preco <= 5000.00"];
+        " preco >= 100.00 and preco < 200.00", " preco >= 200.00 and preco < 500.00", " preco >= 500.00 and preco < 1000.00", " preco >= 1000.00 and preco <= 5000.00"];
       $index = intval($_GET["preco"]);
       $string_consulta .= $array_precos[$index];
     }
@@ -53,7 +53,6 @@ if(isset($_GET["limit"]) && isset($_GET["offset"])){
 
     $string_consulta .= " LIMIT $limit OFFSET $offset";
 
-	error_log(var_dump($string_consulta));
     $consulta = $db_con->prepare($string_consulta);
     if($consulta->execute()){
       if ($consulta->rowCount() > 0) {
